@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html ng-app="redditize">
+  <head>
+    <meta charset="utf-8">
+    <!-- Start links -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/spacelab/bootstrap.min.css" rel="stylesheet" integrity="sha384-L/tgI3wSsbb3f/nW9V6Yqlaw3Gj7mpE56LWrhew/c8MIhAYWZ/FNirA64AVkB5pI" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/main.css">
+    <title>Reddit Clone</title>
+  </head>
+  <body>
+    <!-- Start Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+       <!-- Brand and toggle get grouped for better mobile display -->
+       <div class="navbar-header">
+         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+           <span class="sr-only">Toggle navigation</span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+         </button>
+         <a class="navbar-brand" href="#">Reddit Clone</a>
+       </div>
+
+       <!-- Collect the nav links, forms, and other content for toggling -->
+       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="#" data-target="#myModal" data-toggle="modal">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Submit Post
+            </a></li>
+          </ul>
+         <div class="form-group navbar-left">
+           <input type="text" class="form-control nav-input" placeholder="Search">
+         </div>
+         <ul class="nav navbar-nav">
+           <li class="dropdown">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by <span class="caret"></span></a>
+             <ul class="dropdown-menu">
+               <li><a href="#">Sort by Votes</a></li>
+               <li><a href="#">Sort by Date</a></li>
+               <li><a href="#">Sort Alphabetically</a></li>
+             </ul>
+           </li>
+         </ul>
+       </div><!-- /.navbar-collapse -->
+     </div><!-- /.container-fluid -->
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" my-modal>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">Add New Post</h4>
+          </div>
+          <div class="modal-body">
+            <form novalidate ng-submit="modal.addPost()" ng-controller="modal as modal" name="modalForm">
+              <div class="form-group" ng-class="{good: modalForm.title.$dirty && modalForm.title.$valid, error: modalForm.title.$dirty && modalForm.title.$invalid}">
+                <label for="title">Title</label>
+                <input required type="text" class="form-control" id="title" placeholder="title" name="title" ng-model="modal.title">
+              </div>
+              <small class="error" ng-show="modalForm.title.$error.required && modalForm.title.$dirty">
+                A title is required
+              </small>
+              <div class="form-group" ng-class="{good: modalForm.author.$dirty && modalForm.author.$valid, error: modalForm.author.$dirty && modalForm.author.$invalid}">
+                <label for="author">Author</label>
+                <input required type="text" class="form-control" id="author" placeholder="Password" name="author" ng-model="modal.author">
+              </div>
+              <small class="error" ng-show="modalForm.author.$error.required && modalForm.author.$dirty">
+                An author is required
+              </small>
+              <div class="form-group" ng-class="{good: modalForm.url.$dirty && modalForm.url.$valid, error: modalForm.url.$dirty && modalForm.url.$invalid}">
+                <label for="url">Image URL</label>
+                <input required type="url" class="form-control" id="url" placeholder="Image URL" name="url" ng-model="modal.image_url">
+              </div>
+              <small class="error" ng-show="modalForm.url.$error.required && modalForm.url.$dirty">
+                A url is required
+              </small>
+              <small class="error" ng-show="modalForm.url.$error.url && modalForm.url.$dirty">
+                Please input a valid URL
+              </small>
+              <div class="form-group" ng-class="{good: modalForm.description.$dirty && modalForm.description.$valid, error: modalForm.description.$dirty && modalForm.description.$invalid}">
+                <label for="description">Description</label>
+                <input required type="text" class="form-control" id="description" placeholder="Description" name="description" ng-model="modal.description">
+              </div>
+              <small class="error" ng-show="modalForm.description.$error.required && modalForm.description.$dirty">
+                Please input a valid URL
+              </small>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button ng-disabled="modalForm.$invalid" type="submit" class="btn btn-primary">Make Post</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Start Main Page -->
+    <main class="container-fluid" >
+      <!-- Single post -->
+      <div class="jumbotron" ng-repeat="post in posts">
+        <div class="row">
+          <div class="col-xs-2">
+            <img src="{{post.image_url}}" alt="picture" />
+          </div>
+          <div class="col-xs-10">
+            <div class="">
+              <h3>
+                {{post.title}} |
+                <span class="glyphicon glyphicon-arrow-up" aria-hidden="true">
+                </span>
+                <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+                {{post.rating}}
+              </h3>
+              <p class="text-right">
+                By {{post.author}}
+              </p>
+              <p>
+                {{post.description}}
+              </p>
+              <div class="row">
+                <div class="col-xs-3" ng-controller="timeController as timeController">
+                  <h4>
+                    <time
+                    title="{{ timeController.getTime(post.time) | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">
+                      <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                      {{ post.timeStamp | amCalendar}}
+                    </time>
+                  </h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Start scripts -->
+    <script   src="http://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://opensource.keycdn.com/angularjs/1.5.8/angular.min.js "></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0/angular-moment.js"></script>
+
+    <script type="text/javascript" src="./scripts/app.js"></script>
+    <script type="text/javascript" src="./scripts/modal.js"></script>
+    <script type="text/javascript" src="./scripts/time.js"></script>
+  </body>
+
+</html>
