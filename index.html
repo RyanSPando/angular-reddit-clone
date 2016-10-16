@@ -9,6 +9,7 @@
     <title>Reddit Clone</title>
   </head>
   <body>
+
     <!-- Start Navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
@@ -24,7 +25,7 @@
        </div>
 
        <!-- Collect the nav links, forms, and other content for toggling -->
-       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="sortController as sortController">
           <ul class="nav navbar-nav">
             <li><a href="#" data-target="#myModal" data-toggle="modal">
               <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Submit Post
@@ -35,11 +36,13 @@
          </div>
          <ul class="nav navbar-nav">
            <li class="dropdown">
-             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sort by <span class="caret"></span></a>
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+               Sort {{sortController.selectValue}}
+               <span class="caret"></span></a>
              <ul class="dropdown-menu">
-               <li><a href="#">Sort by Votes</a></li>
-               <li><a href="#">Sort by Date</a></li>
-               <li><a href="#">Sort Alphabetically</a></li>
+               <li><a href="#" ng-click="sortController.setVotes()">Sort by Votes</a></li>
+               <li><a href="#" ng-click="sortController.setDate()">Sort by Date</a></li>
+               <li><a href="#" ng-click="sortController.setAlpha()">Sort Alphabetically</a></li>
              </ul>
            </li>
          </ul>
@@ -103,7 +106,9 @@
     <!-- Start Main Page -->
     <main class="container-fluid" >
       <!-- Single post -->
-      <div class="jumbotron" ng-repeat="post in posts">
+      <div class="jumbotron"
+        ng-repeat="post in posts | orderBy: orderString">
+
         <div class="row">
           <div class="col-xs-2">
             <img src="{{post.image_url}}" alt="picture" />
@@ -114,7 +119,8 @@
                 {{post.title}}
                 |
                 <span ng-controller="ratingController as ratingController">
-                  <span ng-click="ratingController.upVote(post.id)" class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+                  <span ng-click="ratingController.upVote(post.id)" class="glyphicon glyphicon-arrow-up" aria-hidden="true">
+                  </span>
                   <span ng-click="ratingController.downVote(post.id)"class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
                   <span ng-class="{good: post.rating > 1, error: post.rating < 0}">
                     {{post.rating}}
@@ -169,6 +175,7 @@
     <script type="text/javascript" src="./scripts/modal.js"></script>
     <script type="text/javascript" src="./scripts/time.js"></script>
     <script type="text/javascript" src="./scripts/rating.js"></script>
+    <script type="text/javascript" src="./scripts/nav-sort.js"></script>
   </body>
 
 </html>
