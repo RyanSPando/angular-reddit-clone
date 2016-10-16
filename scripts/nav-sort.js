@@ -6,18 +6,17 @@
     $rootScope.orderString = '-rating';
     this.selectValue = 'by Votes';
 
-    this. setVotes = () => {
+    this.setVotes = () => {
       this.selectValue = 'by Votes';
       $rootScope.orderString = '-rating';
     };
-    this. setDate = () => {
+    this.setDate = () => {
       this.selectValue = 'by Date';
       $rootScope.orderString = '-timeStamp';
     };
-    this. setAlpha = () => {
+    this.setAlpha = () => {
       this.selectValue = 'Alphabetically';
       $rootScope.orderString = 'title';
     };
-
   });
 })();
