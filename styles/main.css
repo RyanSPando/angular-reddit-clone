@@ -41,7 +41,6 @@ body { padding-top: 70px; }
   .box-shadow(@shadow);
   outline: 0;
   outline: thin dotted \9; /* IE6-9 */
-  background-color: rgba(255,0,0,.4)
 }
 
 .valid:focus {
@@ -57,8 +56,6 @@ body { padding-top: 70px; }
   @shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(0,255,0,.6);
   .box-shadow(@shadow);
   outline: 0;
-  outline: thin dotted \9; /* IE6-9 */
-  background-color: rgba(0,255,0,.4)
 }
 
 .error {
@@ -68,4 +65,16 @@ body { padding-top: 70px; }
 
 .good {
   color: green;
+}
+
+/*Arrow box shadow*/
+
+.glyphicon.glyphicon-arrow-up:hover
+{
+  color:green;
+}
+
+.glyphicon.glyphicon-arrow-down:hover
+{
+  color:red;
 }

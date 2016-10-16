@@ -8,7 +8,7 @@
     this.description = '';
     $rootScope.posts = [
       {
-        id:1,
+        id: 0,
         title: 'Danger Days',
         author: 'My Chemical Romance',
         image_url: 'http://theywillrockyou.com/wp-content/uploads/2010/10/MCR_album_COVER-1024x1024.jpg',
@@ -26,7 +26,7 @@
           show: true
         },
         {
-          id:2,
+          id: 1,
           title: 'Cover for Under the scythe',
           author: 'Eugene',
           image_url: 'http://65.media.tumblr.com/703ef37f254232dc61e2f358caf90eff/tumblr_nr8lo1FCxs1ua0y99o1_1280.jpg',
@@ -47,7 +47,7 @@
 
     this.addPost  = () => {
       const newPost = {
-      id: $rootScope.posts.length + 1,
+      id: $rootScope.posts.length,
       title: this.title,
       author: this.author,
       image_url: this.image_url,
@@ -58,11 +58,10 @@
       show: true
       };
       $rootScope.posts.push(newPost);
-      console.log($rootScope.posts);
       $scope.dismiss();
     };
   });
-
+  //directive to hide modal
   app.directive('myModal', function() {
     return {
       restrict: 'A',
