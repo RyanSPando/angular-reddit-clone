@@ -141,21 +141,27 @@
                       <span
                       title="{{post.timeStamp | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">
                         <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                        {{ post.timeStamp | amCalendar}}
+                        {{post.timeStamp | amCalendar}}
                       </span>
                       |
                       <span ng-controller="commentController as commentController">
-                        <a href="#" ng-click="commentController.toggleComments(post.id)">
+                        <span class="clickable"  ng-click="commentController.toggleComments(post.id)" ng-show="!post.showComments">
                           <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
                           {{post.comments.length}}
                           <span ng-if="post.comments.length !== 1">comments</span>
                           <span ng-if="post.comments.length === 1">comment</span>
-                        </a>
+                        </span>
+                        <span class="clickable" ng-click="commentController.toggleComments(post.id)" ng-show="post.showComments">
+                          Close
+                        </span>
                         |
-                        <a href="#" ng-click="commentController.toggleAddComment(post.id)">
+                        <span class="clickable" ng-click="commentController.toggleAddComment(post.id)" ng-show="!post.showAddComments">
                           <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                           Add Comment
-                        </a>
+                        </span>
+                        <span class="clickable" ng-click="commentController.toggleAddComment(post.id)" ng-show="post.showAddComments">
+                          Cancel Comment
+                        </span>
                       </span>
                     </div>
                   </h4>
@@ -166,45 +172,49 @@
           <!-- Add comment -->
           <div class="row col-xs-offset-2" ng-show="post.showAddComments">
             <div class="panel panel-warning" ng-controller="addCommentController as addCommentController">
-              <div class="panel-heading"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></div>
-                <form novalidate ng-submit="addCommentController.addComment(post.id)" name="postForm">
-                  <div class="form-group" ng-class="{good: postForm.name.$dirty && postForm.name.$valid, error: postForm.name.$dirty && postForm.name.$invalid}">
-                    <label for="name">Name</label>
-                    <input required type="text" class="form-control" id="name" placeholder="name" name="name" ng-model="addCommentCtrl.name">
-                  </div>
-                  <small class="error" ng-show="postForm.name.$error.required && postForm.name.$dirty">
-                    A name is required to post
-                  </small>
-                  <div class="form-group" ng-class="{good: postForm.comment.$dirty && postForm.comment.$valid, error: postForm.comment.$dirty && postForm.comment.$invalid}">
-                    <label for="comment">Comment</label>
-                    <input required type="text" class="form-control" id="comment" placeholder="comment" name="comment" ng-model="addCommentCtrl.comment">
-                  </div>
-                  <small class="error" ng-show="postForm.comment.$error.required && postForm.comment.$dirty">
-                    Comment cannot be left empty
-                  </small>
-                  <div class="form-group">
-                    <button class="btn btn-warning" type="submit" name="button" ng-disabled="postForm.$invalid">Add Comment</button>
-                  </div>
-                </form>
+              <div class="panel-heading">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
               </div>
+              <form novalidate ng-submit="addCommentController.addComment(post.id)" name="postForm">
+                <div class="form-group" ng-class="{good: postForm.name.$dirty && postForm.name.$valid, error: postForm.name.$dirty && postForm.name.$invalid}">
+                  <label for="name">Name</label>
+                  <input required type="text" class="form-control" id="name" placeholder="name" name="name" ng-model="addCommentController.name">
+                </div>
+                <small class="error" ng-show="postForm.name.$error.required && postForm.name.$dirty">
+                  A name is required to post
+                </small>
+                <div class="form-group" ng-class="{good: postForm.comment.$dirty && postForm.comment.$valid, error: postForm.comment.$dirty && postForm.comment.$invalid}">
+                  <label for="comment">Comment</label>
+                  <input required type="text" class="form-control" id="comment" placeholder="comment" name="comment" ng-model="addCommentController.comment">
+                </div>
+                <small class="error" ng-show="postForm.comment.$error.required && postForm.comment.$dirty">
+                  Comment cannot be left empty
+                </small>
+                <div class="form-group">
+                  <button class="btn btn-warning" type="submit" name="button" ng-disabled="postForm.$invalid">Add Comment</button>
+                </div>
+              </form>
             </div>
           </div>
-          <!-- show comments -->
-          <div class="row col-xs-offset-2" ng-show="post.showComments">
-            <div class="panel panel-info">
-              <div class="panel-heading"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></div>
-              <div class="panel-body">
-                <div class="panel panel-default" ng-repeat="comment in post.comments">
-                  <div class="panel-heading">{{comment.name}} posted {{comment.timeStamp | amCalendar}}</div>
-                  <div class="panel-body">
-                    {{comment.comment}}
-                  </div>
+        </div>
+        <!-- show comments -->
+        <div class="row col-xs-offset-2" ng-show="post.showComments">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+            </div>
+            <div class="panel-body">
+              <div class="panel panel-default" ng-repeat="comment in post.comments">
+                <div class="panel-heading">{{comment.name}} posted {{comment.timeStamp | amCalendar}}</div>
+                <div class="panel-body">
+                  {{comment.comment}}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </main>
+      </div>
+    </main>
 
     <!-- Start scripts -->
     <script   src="http://code.jquery.com/jquery-2.2.4.min.js"   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="   crossorigin="anonymous"></script>

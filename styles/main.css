@@ -67,7 +67,7 @@ body { padding-top: 70px; }
   color: green;
 }
 
-/*Arrow hover color change*/
+/*Hover color change*/
 
 .glyphicon.glyphicon-arrow-up:hover
 {
@@ -77,6 +77,14 @@ body { padding-top: 70px; }
 .glyphicon.glyphicon-arrow-down:hover
 {
   color:red;
+}
+
+.clickable {
+  color: rgba(61, 183, 218, 1)
+}
+
+.clickable:hover {
+  color: rgba(101, 223, 255, 1)
 }
 
 
