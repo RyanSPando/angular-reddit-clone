@@ -1,5 +1,5 @@
 # angular-reddit-clone
-Reddit-clone front-end written in Angular, JavaScript ES2015, Bootstrap, HTML5 and CSS3.
+Reddit-clone front-end written in AngularJS with Angular Moment and Angular Animations, JavaScript ES2015, Bootstrap, HTML5 and CSS3.
 
 live site: https://ryanspando.github.io/angular-reddit-clone/
 
